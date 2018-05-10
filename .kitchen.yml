@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+  network:
+    - ["forwarded_port", {guest: 8080, host: 4568}]
+    - ["private_network", {ip: "192.168.60.40"}]
+
+provisioner:
+  name: chef_zero
+  hosts: localhost
+  http_proxy: <%= ENV['HTTP_PROXY'] %>
+  https_proxy: <%= ENV['HTTPS_PROXY'] %>
+  no_proxy: localhost,127.0.0.1
+  ignore_extensions_from_root: [".git",".idea",".kitchen.yml"]
+  ignore_paths_from_root: [".git",".idea",".kitchen"]
+
+transport:
+  max_ssh_sessions: 6
+
+verifier:
+  name: inspec
+  sudo: true
+
+platforms:
+  - name: centos-7.3
+
+suites:
+  - name: default
+    run_list:
+      - recipe[tomcat::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
