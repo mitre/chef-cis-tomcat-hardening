@@ -31,21 +31,7 @@ end
 # Unzip the above tomcat zip to the /opt/tomcat directory
 execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
 
-# TODO: Find a way for tomcat to recursively give tomcat group ownership of /opt/tomcat
-# Recursively give group ownership of the `/opt/tomcat` directory to the `tomcat` group
-execute 'chgrp -R tomcat /opt/tomcat'
-
-# TODO: Find a way to recursively give group read permissions
-# Recursively set permissions for `conf` folder
-execute 'chmod -R g+r /opt/tomcat/conf'
-
-# TODO: Find a way to add execute permission to group
-# Giving execute permission only to the `conf` folder
-execute 'chmod g+x /opt/tomcat/conf'
-
-# TODO: Find a way to recursively give user ownership of following directories
-# Recursively give ownership to the `tomcat_admin` user to the following folders
-execute 'chown -R tomcat_admin /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
+include_recipe('tomcat::minimize_access')
 
 # Add in the custom tomcat.service file to the tomcat instance
 template '/etc/systemd/system/tomcat.service' do

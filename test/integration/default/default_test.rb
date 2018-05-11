@@ -35,23 +35,3 @@ describe user('tomcat_admin') do
   its('home') { should eq '/opt/tomcat' }
   its('shell') { should eq '/bin/nologin' }
 end
-
-describe file('/opt/tomcat') do
-  it { should exist }
-  it { should be_directory }
-  it { should be_grouped_into 'tomcat' }
-end
-
-describe file('/opt/tomcat/conf') do
-  it { should exist }
-  it { should be_mode 0750 }
-  it { should be_grouped_into 'tomcat' }
-end
-
-%w[ webapps work temp logs ].each do |path|
-  describe file("/opt/tomcat/#{path}") do
-    it { should exist }
-    it { should be_owned_by 'tomcat_admin' }
-    it { should be_grouped_into 'tomcat' }
-  end
-end
