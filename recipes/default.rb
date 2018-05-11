@@ -32,6 +32,7 @@ end
 execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
 
 include_recipe('tomcat::minimize_access')
+include_recipe('tomcat::remove_extraneous_resources')
 
 # Add in the custom tomcat.service file to the tomcat instance
 template '/etc/systemd/system/tomcat.service' do

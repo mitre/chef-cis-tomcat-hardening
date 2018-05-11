@@ -16,3 +16,5 @@ default['tomcat']['file']['logging'] = '/opt/tomcat/conf/logging.properties'
 default['tomcat']['file']['server'] = '/opt/tomcat/conf/server.xml'
 default['tomcat']['file']['tomcat-users'] = '/opt/tomcat/conf/tomcat-users.xml'
 default['tomcat']['file']['web'] = '/opt/tomcat/conf/web.xml'
+
+default['tomcat']['extraneous-resources'] = [ 'docs', 'examples', 'manager', 'host-manager']
